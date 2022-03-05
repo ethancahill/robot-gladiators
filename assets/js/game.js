@@ -14,7 +14,24 @@ var fight = function(enemyName) {
     while(playerHealth > 0 && enemyHealth > 0) {
 
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.")
+    if (promptFight === "skip" || promptFight === "SKIP"){
+        //confirm player wants to skip
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?")
 
+        //if yes (true), leave fight
+        if (confirmSkip) {
+          
+        window.alert(playerName + " has chosen to skip the fight! Goodbye!");
+        // subtract money from playerMoney for skipping
+        playerMoney = playerMoney - 10;
+        console.log("playerMoney", playerMoney);
+        break;
+        }
+        //if no (false), ask question again by running fight() again
+        else {
+            fight()
+        }
+    }
     //if player chooses to fight, then fight
     if (promptFight === "fight" || promptFight === "FIGHT"){
     
@@ -47,24 +64,7 @@ var fight = function(enemyName) {
     else {
         window.alert(enemyName + " still has " + enemyHealth + " health left.")
     }
-  } else if (promptFight === "skip" || promptFight === "SKIP"){
-        //confirm player wants to skip
-        var confirmSkip = window.confirm("Are you sure you'd like to quit?")
-
-        //if yes (true), leave fight
-        if (confirmSkip) {
-          
-        window.alert(playerName + " has chosen to skip the fight! Goodbye!");
-        // subtract money from playerMoney for skipping
-        playerMoney = playerMoney - 10;
-        console.log("playerMoney", playerMoney);
-        break;
-        }
-        //if no (false), ask question again by running fight() again
-        else {
-            fight()
-        }
-    } else {
+  }  else {
     window.alert("You need to choose a valid option. Try again!");
      fight()
     }
@@ -72,6 +72,12 @@ var fight = function(enemyName) {
 }
 
 for(var i = 0; i < enemyNames.length; i++) {
+    if (playerHealth > 0) {
+        window.alert("Welcome to Robot Gladiators! Round " + (i+1));
+    } else {
+        window.alert("You have lost your robot in battle! Game Over!");
+        break;
+    }
     var pickedEnemyName = enemyNames[i];
     enemyHealth = 50
     fight(pickedEnemyName);
