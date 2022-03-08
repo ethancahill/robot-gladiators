@@ -1,21 +1,32 @@
 
+var fightOrSkip = function (){
+    var promptFight = window.prompt ('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+
+   if (promptFight === ""  || promptFight === null) {
+       window.alert("You need to provide a valid answer! Please try again.")
+       return fightOrSkip()
+   }
+
+   promptFight = promptFight.toLowerCase();
+
+    if (promptFight === "skip") {
+
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+        if (confirmSkip) {
+            window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!")
+
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            return true;
+        }
+    }
+    return false;
+}
 var fight = function(enemy) {
   while (playerInfo.health > 0 && enemy.health > 0) {
-
-    var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
-
-    if (promptFight === "skip" || promptFight === "SKIP") {
     
-      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-    
-      if (confirmSkip) {
-        window.alert(playerInfo.name + ' has decided to skip this fight. Goodbye!');
-        
-        playerInfo.money = Math.max(0, playerInfo.money - 10);
-        console.log("playerInfo.money", playerInfo.money);
+    if (fightOrSkip()){
         break;
-      }
     }
 
     var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
@@ -64,7 +75,6 @@ for (var i = 0; i < enemyInfo.length; i++) {
   if (playerInfo.health > 0) {
     
     window.alert('Welcome to Robot Gladiators! Round ' + (i + 1));
-    debugger;
 
  
     var pickedEnemyObj = enemyInfo[i];
@@ -149,8 +159,19 @@ var randomNumber = function(min, max) {
     return value;
 }
 
+var getPlayerName = function() {
+    var name = "";
+
+  while (name === "" || name === null) {
+      name = prompt("What is your robot's name?");
+  }
+
+    console.log("Your robot's name is " + name);
+    return name;
+};
+
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
